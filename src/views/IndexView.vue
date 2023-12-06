@@ -315,7 +315,7 @@ const selectedAbstractID = ref(-1)
 
 const mobileFiltersOpen = ref(false)
 
-const isMobile = (screen.width <= 1024) ? true : false
+const isMobile = ref((window.innerWidth <= 1024) ? true : false);
 const sidebarOpen = ref(false)
 
 // updateCounts()
@@ -323,6 +323,10 @@ store.recalculateCounts()
 function recalc() {
   store.recalculateCounts()
 }
+
+window.addEventListener("resize", (e) => {
+  isMobile.value = (window.innerWidth <= 1024) ? true : false;
+});
 
 /*
 const debounce = (callback, wait) => {
