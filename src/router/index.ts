@@ -1,24 +1,43 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-const routes: Array<RouteRecordRaw> =[
+
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
-  },
+    component: () => import('../views/IndexView.vue')
+  }, 
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../views/AdminView.vue'),
+    redirect: '/admin/new',
+    children: [{
+      name: 'new-abstracts',
+      path: 'new',
+      component: () => import('../components/admin/NewAbstracts.vue')
+    }, {
+      name: 'indexed-abstracts',
+      path: 'index',
+      component: () => import('../components/admin/IndexedAbstracts.vue')
+    }, {
+      name: 'archived-abstracts',
+      path: 'archive',
+      component: () => import('../components/admin/ArchivedAbstracts.vue')
+    }, {
+        name: 'edit-abstract',
+        path: 'edit/:responseID',
+        component: () => import('../components/admin/EditAbstract.vue'),
+        props: true
+      }
+    ],
+  },
+
+  { path: '/:pathMatch(.*)*', redirect: '/' }
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 });
 

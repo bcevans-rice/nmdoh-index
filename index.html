@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue + TS + Tailwind + router</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./TC-logo.svg" sizes="192x192">
+  <link rel="icon" href="./TC-logo.svg" sizes="32x32">
+  <title>Programs in Texas - Texas Consortium for the Non-Medical Drivers of Health</title>
+  <!-- Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LT6FDJMW1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0LT6FDJMW1');
+  </script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body class="h-full">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/gtag/js?id=G-0LT6FDJMW1" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- White NMDOH logo header -->
+  <header class="bg-white">
+    <div class="p-6 mx-4 lg:mx-24">
+      <div>
+        <a href="https://www.driversofhealthtx.org/" rel="home" target="_blank">
+          <img class="w-450" alt="Texas Consortium for the Non-Medical Drivers of Health" src="./txnmdoh-logo.svg"
+            width="497" height="70">
+        </a>
+      </div>
+    </div>
+  </header>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

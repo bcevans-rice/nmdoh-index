@@ -1,5 +1,5 @@
 {
-  "name": "vue3-vite-ts-tailwind",
+  "name": "nmdoh-index",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,10 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/oxygen": "^5.0.3",
+    "exceljs": "^4.4.0",
+    "minisearch": "^6.1.0",
+    "path": "^0.12.7",
+    "pinia": "^2.1.4",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@headlessui/vue": "^1.7.14",
+    "@heroicons/vue": "^2.0.18",
+    "@tailwindcss/forms": "^0.5.3",
     "@vitejs/plugin-vue": "^4.1.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",

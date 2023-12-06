@@ -10,5 +10,10 @@ export default defineConfig({
       //  '@/': fileURLToPath(new URL('./src/', import.meta.url))
       '@': resolve(__dirname, 'src')
     }
+  },
+  esbuild: {
+    supported: {
+      'top-level-await': true //browsers can handle top-level-await features
+    },
   }
 })
