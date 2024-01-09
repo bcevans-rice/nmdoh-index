@@ -90,6 +90,7 @@ export const useSearchStore = defineStore('search', {
         { value: 'Social Support/Social Isolation', label: 'Social Support/Social Isolation', checked: false },
         { value: 'Substance use', label: 'Substance use', checked: false },
         { value: 'Transportation', label: 'Transportation', checked: false },
+        { value: 'All NMDOH', label: 'All NMDOH', checked: false },
         { value: 'Other', label: 'Other', checked: false },
       ],
     }, {
