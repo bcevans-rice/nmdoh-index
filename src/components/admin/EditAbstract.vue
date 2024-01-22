@@ -480,6 +480,7 @@
 
 <script setup>
 import { useSearchStore } from '@/stores/search'
+import { useAppSetupStore } from '@/stores/appSetup'
 import { storeToRefs } from 'pinia'
 
 import HeaderTitle from './HeaderTitle.vue';
@@ -498,6 +499,8 @@ const countySearch = ref('')
 
 // Prepare dropdowns
 const store = useSearchStore()
+const appSetupStore = useAppSetupStore()
+
 const { searchFilters } = storeToRefs(store)
 const dropdowns = {}
 
@@ -505,7 +508,7 @@ for (const f of searchFilters.value) {
   dropdowns[f['id']] = f['options'].map(opt => opt.value)
 }
 
-const API_URL = 'https://kllxvfjrmlaj2ywwdfjux3ebeu0wizyp.lambda-url.us-west-2.on.aws';
+const API_URL = appSetupStore.nmdohIndexServiceURL;
 
 // Declare responseID as a prop so we can pull it in from parent component
 const props = defineProps(['responseID'])

@@ -40,10 +40,11 @@
 </template>
 
 <script setup>
+import { useAppSetupStore } from '@/stores/appSetup'
+const appSetupStore = useAppSetupStore()
 import HeaderTitle from './HeaderTitle.vue';
 
-
-const response = await fetch('https://kllxvfjrmlaj2ywwdfjux3ebeu0wizyp.lambda-url.us-west-2.on.aws/new', {cors: true});
+const response = await fetch(appSetupStore.nmdohIndexServiceURL + '/new', {cors: true});
 let newAbstracts = await response.json();
 newAbstracts.sort(sortAbstracts)
 

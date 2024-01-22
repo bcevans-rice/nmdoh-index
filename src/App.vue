@@ -1,5 +1,6 @@
 <template>
   <main >
+    <p v-if="appSetupStore.mode == 'development'" class="px-6 mx-4 lg:mx-24 mb-1 font-bold">DEVELOPMENT</p>
     <router-view />
   </main>
   
@@ -35,8 +36,10 @@
 import { ref, watch, onMounted } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { useRoute, useRouter } from 'vue-router';
+import { useAppSetupStore } from '@/stores/appSetup'
+const appSetupStore = useAppSetupStore()
 
-const API_URL = 'https://kllxvfjrmlaj2ywwdfjux3ebeu0wizyp.lambda-url.us-west-2.on.aws';
+const API_URL = appSetupStore.nmdohIndexServiceURL
 
 const route = useRoute();
 const router = useRouter();
