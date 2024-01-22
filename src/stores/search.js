@@ -68,7 +68,7 @@ export const useSearchStore = defineStore('search', {
         { value: 'Clinic/Ambulatory Practice', label: 'Clinic/Ambulatory Practice', checked: false },
         { value: 'Educational Institution', label: 'Educational Institution', checked: false },
         { value: 'Health/Hospital System', label: 'Health/Hospital System', checked: false },
-        { value: 'Health Plan', label: 'Health Plan', checked: false },
+        { value: 'Health Plan (Medicare Advantage, Medicaid, Dual Eligible, Other)', label: 'Health Plan', checked: false },
       ],
     }, {
       id: 'nmdohTargets',
