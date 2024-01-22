@@ -1,4 +1,5 @@
 <template>
+  <p class="absolute text-xs top-2 right-3 text-right font-bold">{{appVersion}}</p>
   <main >
     <p v-if="appSetupStore.mode == 'development'" class="px-6 mx-4 lg:mx-24 mb-1 font-bold">DEVELOPMENT</p>
     <router-view />
@@ -33,12 +34,14 @@
 </template>
 
 <script setup>
+
 import { ref, watch, onMounted } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { useRoute, useRouter } from 'vue-router';
 import { useAppSetupStore } from '@/stores/appSetup'
 const appSetupStore = useAppSetupStore()
 
+const appVersion = __APP_VERSION__
 const API_URL = appSetupStore.nmdohIndexServiceURL
 
 const route = useRoute();
