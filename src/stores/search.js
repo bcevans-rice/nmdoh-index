@@ -69,6 +69,7 @@ export const useSearchStore = defineStore('search', {
         { value: 'Educational Institution', label: 'Educational Institution', checked: false },
         { value: 'Health/Hospital System', label: 'Health/Hospital System', checked: false },
         { value: 'Health Plan (Medicare Advantage, Medicaid, Dual Eligible, Other)', label: 'Health Plan', checked: false },
+        { value: 'Other (please specify)', label: 'Other', checked: false },
       ],
     }, {
       id: 'nmdohTargets',
