@@ -40,9 +40,9 @@
 </template>
 
 <script setup>
+import HeaderTitle from './HeaderTitle.vue';
 import { useAppSetupStore } from '@/stores/appSetup'
 const appSetupStore = useAppSetupStore()
-import HeaderTitle from './HeaderTitle.vue';
 
 const response = await fetch(appSetupStore.nmdohIndexServiceURL, {cors: true});
 let newAbstracts = await response.json();

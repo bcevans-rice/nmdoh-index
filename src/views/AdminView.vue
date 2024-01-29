@@ -57,13 +57,13 @@
 </template>
 
 <script setup>
-import { useAppSetupStore } from '@/stores/appSetup'
-const appSetupStore = useAppSetupStore()
-
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { DocumentArrowDownIcon, Cog8ToothIcon } from '@heroicons/vue/24/solid'
 import { ref } from 'vue'
+import { useAppSetupStore } from '@/stores/appSetup'
+const appSetupStore = useAppSetupStore()
+
 
 const API_URL = appSetupStore.nmdohIndexServiceURL;
 const EXCEL_URL = 'https://index.driversofhealthtx.org/nmdoh-program-abstracts.xlsx';
