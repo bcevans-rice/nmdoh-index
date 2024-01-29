@@ -1,7 +1,7 @@
 {
   "name": "nmdoh-index",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite --port 2115",
