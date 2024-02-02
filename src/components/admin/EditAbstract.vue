@@ -26,50 +26,57 @@
           class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Health Organization" />
       </div>
 
-      <div
-        class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
-        <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Program Sponsor Type</label>
+      <div class="flex flex-wrap">
+        <div :class="[editedAbstract.healthOrgType.indexOf('Other (please specify)') > -1 ? 'w-1/2 md:w-1/4' : 'w-full']"
+          class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Program Sponsor Type</label>
 
-        <!-- healthOrgType dropdown -->
-        <Menu as="div" class="relative inline-block text-left">
-          <div>
-            <MenuButton
-              class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white pr-3 pl-1 py-2 text-md hover:bg-gray-50">
-              <span v-if="editedAbstract.healthOrgType">{{ editedAbstract.healthOrgType }}</span>
-              <span v-else class="text-gray-400">Select</span>
-              <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-            </MenuButton>
-          </div>
+          <!-- healthOrgType dropdown -->
+          <Menu as="div" class="relative inline-block text-left">
+            <div>
+              <MenuButton
+                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white pr-3 pl-1 py-2 text-md hover:bg-gray-50">
+                <span v-if="editedAbstract.healthOrgType">{{ editedAbstract.healthOrgType }}</span>
+                <span v-else class="text-gray-400">Select</span>
+                <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+              </MenuButton>
 
-          <transition enter-active-class="transition ease-out duration-100"
-            enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-            leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-            leave-to-class="transform opacity-0 scale-95">
-            <MenuItems
-              class="absolute cursor-pointer left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100">
-              <div class="py-1">
+              
+            </div>
 
-                <MenuItem v-for="val in dropdowns['healthOrgType']">
-                <a @click="editedAbstract.healthOrgType = val"
-                  :class="[editedAbstract.healthOrgType === val ? 'bg-nmdoh-purple text-white' : 'text-gray-700', 'block px-4 py-2 text-sm']">{{
-                    val }}</a>
-                </MenuItem>
+            <transition enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95">
+              <MenuItems
+                class="absolute cursor-pointer left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100">
+                <div class="py-1">
 
-              </div>
-              <div class="py-1">
-                <MenuItem>
-                <a class="block px-4 py-2 text-sm text-gray-700" @click="editedAbstract.healthOrgType = ''">
-                  <XMarkIcon class="text-sm text-gray-700 w-3 h-3 mr-1 inline-block" />
-                  <span>Clear</span>
-                </a>
-                </MenuItem>
-              </div>
-            </MenuItems>
-          </transition>
-        </Menu>
+                  <MenuItem v-for="val in dropdowns['healthOrgType']">
+                  <a @click="editedAbstract.healthOrgType = val"
+                    :class="[editedAbstract.healthOrgType === val ? 'bg-nmdoh-purple text-white' : 'text-gray-700', 'block px-4 py-2 text-sm']">{{
+                      val }}</a>
+                  </MenuItem>
 
+                </div>
+                <div class="py-1">
+                  <MenuItem>
+                  <a class="block px-4 py-2 text-sm text-gray-700" @click="editedAbstract.healthOrgType = ''">
+                    <XMarkIcon class="text-sm text-gray-700 w-3 h-3 mr-1 inline-block" />
+                    <span>Clear</span>
+                  </a>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
+        <div v-if="editedAbstract.healthOrgType.indexOf('Other (please specify)') > -1"
+            class="relative grow max-w-3/4 rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+            <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Other Sponsor Type</label>
+            <input type="text" class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" v-model="editedAbstract.healthOrgNameOther" placeholder="Other sponsor type" />
+        </div>
       </div>
-
 
 
       <div
