@@ -1,8 +1,7 @@
 <template>
   <HeaderTitle :title="'Editing ' + originalAbstract.programName">
     <button @click="saveAbstractUpdates" class="ml-8 rounded bg-nmdoh-green-2 text-white px-4 py-2">Save Edits</button>
-    <button @click="saveAbstractUpdatesAndIndex" class="ml-2 rounded bg-nmdoh-green-2 text-white px-4 py-2">Save &
-      Index</button>
+    <button @click="saveAbstractUpdatesAndIndex" class="ml-2 rounded bg-nmdoh-green-2 text-white px-4 py-2">Save & Index</button>
 
   </HeaderTitle>
 
@@ -97,8 +96,203 @@
       <div
         class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
         <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Program Funding</label>
-        <input type="text" v-model="editedAbstract.programFunding"
+        <textarea type="text" v-model="editedAbstract.programFunding" rows="3"
           class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Description of program funding" />
+      </div>
+
+      <div
+        class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+        <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Funder 1</label>
+        <input type="text" v-model="editedAbstract.programFunder1"
+          class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Program funder 1" />
+      </div>
+      <div class="flex flex-wrap">
+
+        <div :class="[editedAbstract.programFundingType1.indexOf('Other') > -1 ? 'rounded-tl-md max-w-[75%]' : 'rounded-md max-w-[100%]']"
+          class="grow rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="name" class="block text-xs font-semibold text-nmdoh-purple">Funding type 1</label>
+
+          <!-- NMDOH Targets array tags -->
+          <Menu as="div" class="relative inline-flex flex-wrap text-left">
+
+              <MenuButton
+                class="inline-flex justify-center gap-x-1.5 rounded-md bg-white pr-3 pl-1 py-2 text-md hover:bg-gray-50">
+                <span class="text-gray-400">Add</span>
+                <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+              </MenuButton>
+
+              <span v-for="(tgt, idx) in editedAbstract.programFundingType1"
+                class="m-1 inline-flex items-baseline rounded-full border border-nmdoh-purple bg-nmdoh-purple py-1 pl-2 pr-2 text-sm font-medium text-white min-w-fit">
+                {{ tgt }}
+                <button type="button" @click="editedAbstract.programFundingType1.splice(idx, 1)"
+                  class="ml-1 inline-block h-4 w-4 flex-shrink-0 rounded-full p-1 text-white">
+                  <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                    <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
+                  </svg>
+                </button>
+              </span>
+
+
+            <transition enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95">
+              <MenuItems
+                class="absolute cursor-pointer left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100">
+                <div class="py-1">
+                  <MenuItem
+                    v-for="val in dropdowns['programFundingType'].filter(tgt => editedAbstract.programFundingType1.indexOf(tgt) === -1)">
+                  <a @click="editedAbstract.programFundingType1.push(val)"
+                    :class="[editedAbstract.programFundingType1.indexOf(val) > -1 ? 'bg-nmdoh-purple text-white' : 'text-gray-700', 'block px-4 py-2 text-sm']">{{
+                      val }}</a>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
+
+        <!-- nmdohTargetsOther -->
+        <div v-if="editedAbstract.programFundingType1.indexOf('Other') > -1"
+          class="grow max-w-[25%] rounded-tr-md px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Other funding type 1</label>
+          <input type="text" v-model="editedAbstract.programFundingTypeOther1"
+            class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Other target" />
+        </div>
+
+
+      </div>
+
+      <div
+        class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+        <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Funder 2</label>
+        <input type="text" v-model="editedAbstract.programFunder2"
+          class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Program funder 2" />
+      </div>
+      <div class="flex flex-wrap">
+        <div :class="[editedAbstract.programFundingType2.indexOf('Other') > -1 ? 'rounded-tl-md max-w-[75%]' : 'rounded-md max-w-[100%]']"
+          class="grow rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="name" class="block text-xs font-semibold text-nmdoh-purple">Funding type 2</label>
+
+          <!-- NMDOH Targets array tags -->
+          <Menu as="div" class="relative inline-flex flex-wrap text-left">
+
+              <MenuButton
+                class="inline-flex justify-center gap-x-1.5 rounded-md bg-white pr-3 pl-1 py-2 text-md hover:bg-gray-50">
+                <span class="text-gray-400">Add</span>
+                <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+              </MenuButton>
+
+              <span v-for="(tgt, idx) in editedAbstract.programFundingType2"
+                class="m-1 inline-flex items-baseline rounded-full border border-nmdoh-purple bg-nmdoh-purple py-1 pl-2 pr-2 text-sm font-medium text-white min-w-fit">
+                {{ tgt }}
+                <button type="button" @click="editedAbstract.programFundingType2.splice(idx, 1)"
+                  class="ml-1 inline-block h-4 w-4 flex-shrink-0 rounded-full p-1 text-white">
+                  <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                    <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
+                  </svg>
+                </button>
+              </span>
+
+
+            <transition enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95">
+              <MenuItems
+                class="absolute cursor-pointer left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100">
+                <div class="py-1">
+                  <MenuItem
+                    v-for="val in dropdowns['programFundingType'].filter(tgt => editedAbstract.programFundingType2.indexOf(tgt) === -1)">
+                  <a @click="editedAbstract.programFundingType2.push(val)"
+                    :class="[editedAbstract.programFundingType2.indexOf(val) > -1 ? 'bg-nmdoh-purple text-white' : 'text-gray-700', 'block px-4 py-2 text-sm']">{{
+                      val }}</a>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
+
+        <!-- nmdohTargetsOther -->
+        <div v-if="editedAbstract.programFundingType2.indexOf('Other') > -1"
+          class="grow max-w-[25%] rounded-tr-md px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Other funding type 2</label>
+          <input type="text" v-model="editedAbstract.programFundingTypeOther2"
+            class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Other target" />
+        </div>
+
+
+      </div>
+
+      <div
+        class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+        <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Funder 3</label>
+        <input type="text" v-model="editedAbstract.programFunder3"
+          class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Program funder 3" />
+      </div>
+      <div class="flex flex-wrap">
+        <div :class="[editedAbstract.programFundingType3.indexOf('Other') > -1 ? 'rounded-tl-md max-w-[75%]' : 'rounded-md max-w-[100%]']"
+          class="grow rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="name" class="block text-xs font-semibold text-nmdoh-purple">Funding type 3</label>
+
+          <!-- NMDOH Targets array tags -->
+          <Menu as="div" class="relative inline-flex flex-wrap text-left">
+
+              <MenuButton
+                class="inline-flex justify-center gap-x-1.5 rounded-md bg-white pr-3 pl-1 py-2 text-md hover:bg-gray-50">
+                <span class="text-gray-400">Add</span>
+                <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+              </MenuButton>
+
+              <span v-for="(tgt, idx) in editedAbstract.programFundingType3"
+                class="m-1 inline-flex items-baseline rounded-full border border-nmdoh-purple bg-nmdoh-purple py-1 pl-2 pr-2 text-sm font-medium text-white min-w-fit">
+                {{ tgt }}
+                <button type="button" @click="editedAbstract.programFundingType3.splice(idx, 1)"
+                  class="ml-1 inline-block h-4 w-4 flex-shrink-0 rounded-full p-1 text-white">
+                  <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                    <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
+                  </svg>
+                </button>
+              </span>
+
+
+            <transition enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95">
+              <MenuItems
+                class="absolute cursor-pointer left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100">
+                <div class="py-1">
+                  <MenuItem
+                    v-for="val in dropdowns['programFundingType'].filter(tgt => editedAbstract.programFundingType3.indexOf(tgt) === -1)">
+                  <a @click="editedAbstract.programFundingType3.push(val)"
+                    :class="[editedAbstract.programFundingType3.indexOf(val) > -1 ? 'bg-nmdoh-purple text-white' : 'text-gray-700', 'block px-4 py-2 text-sm']">{{
+                      val }}</a>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
+
+        <!-- nmdohTargetsOther -->
+        <div v-if="editedAbstract.programFundingType3.indexOf('Other') > -1"
+          class="grow max-w-[25%] rounded-tr-md px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Other funding type 3</label>
+          <input type="text" v-model="editedAbstract.programFundingTypeOther3"
+            class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Other target" />
+        </div>
+
+
+      </div>
+
+      <div
+        class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+        <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Funding Comment</label>
+        <textarea type="text" v-model="editedAbstract.programFundingComment" rows="2"
+          class="block w-full h-auto resize-none border-0 p-0  placeholder: focus:ring-0 sm:leading-6"
+          placeholder="" />
       </div>
 
       <div
@@ -478,8 +672,7 @@
       </div>
       <div class="float-right">
         <button @click="saveAbstractUpdates" class="ml-8 rounded bg-nmdoh-green-2 text-white px-4 py-2">Save Edits</button>
-        <button @click="saveAbstractUpdatesAndIndex" class="ml-2 rounded bg-nmdoh-green-2 text-white px-4 py-2">Save &
-          Index</button>
+        <button @click="saveAbstractUpdatesAndIndex" class="ml-2 rounded bg-nmdoh-green-2 text-white px-4 py-2">Save & Index</button>
       </div>
     </div>
   </div>

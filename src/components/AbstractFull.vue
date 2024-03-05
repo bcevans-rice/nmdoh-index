@@ -23,7 +23,9 @@
         </div>
         <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
           <dt class="text-sm font-bold leading-6 text-gray-900">Program Funding</dt>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ abstract.programFunding }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <p v-for="f in abstract.programFunding.split('\n')">{{ f }}</p>
+          </dd>
         </div>
         
         <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">

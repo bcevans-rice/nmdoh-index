@@ -44,7 +44,9 @@
           <div class="text-sm leading-6 text-gray-700 mt-1 mb-4 sm:mb-8">{{ abstract.programOperation }}</div>
 
           <div class="text-md font-bold leading-6 text-gray-900">Funding</div>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ abstract.programFunding }}</dd>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <p v-for="f in abstract.programFunding.split('\n')">{{ f }}</p>
+          </dd>
         </div>
       </div>
 

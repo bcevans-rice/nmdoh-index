@@ -9,7 +9,12 @@ const abstracts = [...abs].sort(sortAbstracts);
 let miniSearch = new MiniSearch({
   idField: 'responseID',
   fields: ['programName', 'healthOrgName', 'programFunding', 'programOperation', 'countiesOffered', 'conditionFocus', 'nmdohTargets'], // fields to index for full-text search
-  storeFields: ['responseID'] // fields to return with search results
+  storeFields: ['responseID'], // fields to return with search results
+  extractField: (document, fieldName) => {
+    if (Array.isArray(document[fieldName]))
+     return document[fieldName].join(' ')
+    return document[fieldName]
+  }
 })
 miniSearch.addAll(abstracts)
 
@@ -143,7 +148,18 @@ export const useSearchStore = defineStore('search', {
         { value: 'Yes', label: 'Yes', checked: false },
         { value: 'No', label: 'No', checked: false },
       ],
+    }, {
+      id: 'programFundingType',
+      name: 'Program Funding Type',
+      options: [
+        { value: 'Private Grant', label: 'Private Grant', checked: false },
+        { value: 'Government Grant', label: 'Government Grant', checked: false },
+        { value: 'Operating Budget', label: 'Operating Budget', checked: false },
+        { value: 'Payor Reimbursement', label: 'Payor Reimbursement', checked: false },
+        { value: 'Other', label: 'Other', checked: false },
+      ],
     }],
+    
     miniSearchFilteredList: [...abstracts],
     counts: {
       countiesOffered: {},
