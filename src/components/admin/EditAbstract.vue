@@ -103,6 +103,66 @@
 
       <div
         class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+        <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Funder</label>
+        <input type="text" v-model="editedAbstract.programFunder"
+          class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Program funders" />
+      </div>
+
+      <div class="flex flex-wrap">
+        <div :class="[editedAbstract.programFundingType.indexOf('Other') > -1 ? 'rounded-tl-md max-w-[75%]' : 'rounded-md max-w-[100%]']"
+          class="grow rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="name" class="block text-xs font-semibold text-nmdoh-purple">Funding type</label>
+
+          <!-- NMDOH Targets array tags -->
+          <Menu as="div" class="relative inline-flex flex-wrap text-left">
+
+              <MenuButton
+                class="inline-flex justify-center gap-x-1.5 rounded-md bg-white pr-3 pl-1 py-2 text-md hover:bg-gray-50">
+                <span class="text-gray-400">Add</span>
+                <ChevronDownIcon class="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+              </MenuButton>
+
+              <span v-for="(tgt, idx) in editedAbstract.programFundingType"
+                class="m-1 inline-flex items-baseline rounded-full border border-nmdoh-purple bg-nmdoh-purple py-1 pl-2 pr-2 text-sm font-medium text-white min-w-fit">
+                {{ tgt }}
+                <button type="button" @click="editedAbstract.programFundingType.splice(idx, 1)"
+                  class="ml-1 inline-block h-4 w-4 flex-shrink-0 rounded-full p-1 text-white">
+                  <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                    <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
+                  </svg>
+                </button>
+              </span>
+
+
+            <transition enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95">
+              <MenuItems
+                class="absolute cursor-pointer left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100">
+                <div class="py-1">
+                  <MenuItem
+                    v-for="val in dropdowns['programFundingType'].filter(tgt => editedAbstract.programFundingType.indexOf(tgt) === -1)">
+                  <a @click="editedAbstract.programFundingType.push(val)"
+                    :class="[editedAbstract.programFundingType.indexOf(val) > -1 ? 'bg-nmdoh-purple text-white' : 'text-gray-700', 'block px-4 py-2 text-sm']">{{
+                      val }}</a>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
+
+        <div v-if="editedAbstract.programFundingType.indexOf('Other') > -1"
+          class="grow max-w-[25%] rounded-tr-md px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
+          <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Other funding type</label>
+          <input type="text" v-model="editedAbstract.programFundingTypeOther"
+            class="block w-full border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Other funding type" />
+        </div>
+
+      </div>
+      <div
+        class="relative rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
         <label for="name" class="block text-xs font-semibold text-nmdoh-purple">Program is Active</label>
         <!-- programIsActive dropdown -->
         <Menu as="div" class="relative inline-block text-left">
@@ -491,7 +551,7 @@ import { useAppSetupStore } from '@/stores/appSetup'
 import { storeToRefs } from 'pinia'
 
 import HeaderTitle from './HeaderTitle.vue';
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, nextTick} from 'vue'
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid'
@@ -540,7 +600,7 @@ watch(editedAbstract, (newVal, oldVal) => {
   // Note: `newValue` will be equal to `oldValue` here
   // because they both point to the same object!
 
-
+  
   updatesToAbstract.value = {}
   let updates = {}
 
