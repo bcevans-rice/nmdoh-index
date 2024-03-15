@@ -143,6 +143,16 @@ export const useSearchStore = defineStore('search', {
         { value: 'Yes', label: 'Yes', checked: false },
         { value: 'No', label: 'No', checked: false },
       ],
+    }, {
+      id: 'programFundingType',
+      name: 'Program Funding Type',
+      options: [
+        { value: 'Private Grant', label: 'Private Grant', checked: false },
+        { value: 'Government Grant', label: 'Government Grant', checked: false },
+        { value: 'Operating Budget', label: 'Operating Budget', checked: false },
+        { value: 'Payor Reimbursement', label: 'Payor Reimbursement', checked: false },
+        { value: 'Other', label: 'Other', checked: false },
+      ]
     }],
     miniSearchFilteredList: [...abstracts],
     counts: {

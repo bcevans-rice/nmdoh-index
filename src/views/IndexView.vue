@@ -48,7 +48,7 @@
                     <div class=" block">
                       <form class="space-y-2 divide-y divide-gray-200">
 
-                        <Disclosure as="div" v-for="section in searchFilters" :key="section.id"
+                        <Disclosure as="div" v-for="section in searchFilters.filter(f => f.id != 'programFundingType')" :key="section.id"
                           class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
                           <h3 class="-mx-4 -my-3 flow-root">
                             <DisclosureButton
@@ -158,7 +158,7 @@
             <div class="hidden lg:block">
               <form class="space-y-2 divide-y divide-gray-200">
 
-                <Disclosure as="div" v-for="section in searchFilters" :key="section.id"
+                <Disclosure as="div" v-for="section in searchFilters.filter(f => f.id != 'programFundingType')" :key="section.id"
                   class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
                   <h3 class="-mx-4 -my-3 flow-root">
                     <DisclosureButton
