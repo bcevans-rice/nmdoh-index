@@ -8,7 +8,7 @@ const abstracts = [...abs].sort(sortAbstracts);
 
 let miniSearch = new MiniSearch({
   idField: 'responseID',
-  fields: ['programName', 'healthOrgName', 'programFunding', 'programOperation', 'countiesOffered', 'conditionFocus', 'nmdohTargets'], // fields to index for full-text search
+  fields: ['programName', 'healthOrgName', 'programFunding', 'programOperation', 'countiesOffered', 'conditionFocus', 'nmdohTargets', 'programFundingType'], // fields to index for full-text search
   storeFields: ['responseID'] // fields to return with search results
 })
 miniSearch.addAll(abstracts)
@@ -162,7 +162,8 @@ export const useSearchStore = defineStore('search', {
       programIsEvaluated: {},
       nmdohTargets: {},
       nmdohTargetPopulations: {},
-      conditionFocus: {}
+      conditionFocus: {},
+      programFundingType: {},
     },
     sponsors: sponsorsArray,
     sponsorPrograms,
@@ -185,7 +186,6 @@ export const useSearchStore = defineStore('search', {
       let remaining = [...state.miniSearchFilteredList]
       let filters = Object.assign({}, ...(state.searchFilters.map(sect => ({ [sect.id]: sect.options.filter((opt) => opt.checked) }))));
 
-
       if (filters['nmdohTargets'].length > 0) {
         remaining = remaining.filter((abstract) => {
           return filters['nmdohTargets'].every((tgt) => {
@@ -203,6 +203,7 @@ export const useSearchStore = defineStore('search', {
       if (filters['nmdohTargetPopulations'].length > 0) {
         remaining = remaining.filter((abstract) => {
           return filters['nmdohTargetPopulations'].every((tgt) => {
+            console.log(abstract['nmdohTargetPopulations'], tgt.value);
             return abstract["nmdohTargetPopulations"].some(abTgt => abTgt === tgt.value);
           });
         });
@@ -232,6 +233,13 @@ export const useSearchStore = defineStore('search', {
         remaining = remaining.filter((abstract) => {
           return filters['programIsEvaluated'].every((tgt) => {
             return abstract["programIsEvaluated"] === tgt.value
+          });
+        });
+      }
+      if (filters['programFundingType'].length > 0) {
+        remaining = remaining.filter((abstract) => {
+          return filters['programFundingType'].every((tgt) => {
+            return (Object.hasOwn(abstract, 'programFundingType')) ? abstract["programFundingType"].some(abTgt => abTgt === tgt.value) : false
           });
         });
       }
@@ -295,6 +303,13 @@ export const useSearchStore = defineStore('search', {
 
         if (_abs["programIsEvaluated"] in this.counts["programIsEvaluated"]) this.counts["programIsEvaluated"][_abs["programIsEvaluated"]] += 1
         else this.counts["programIsEvaluated"][_abs["programIsEvaluated"]] = 1
+
+        if (Object.hasOwn(_abs, 'programFundingType')) {
+          _abs["programFundingType"].forEach(tp => {
+            if (tp in this.counts["programFundingType"]) this.counts["programFundingType"][tp] += 1
+            else this.counts["programFundingType"][tp] = 1
+          })
+        }
       })
     },
     clearFilters () {
@@ -314,7 +329,8 @@ export const useSearchStore = defineStore('search', {
         programIsEvaluated: {},
         nmdohTargets: {},
         nmdohTargetPopulations: {},
-        conditionFocus: {}
+        conditionFocus: {},
+        programFundingType: {}
       }
     }
   },
