@@ -44,7 +44,9 @@
           <div class="text-sm leading-6 text-gray-700 mt-1 mb-4 sm:mb-8">{{ abstract.programOperation }}</div>
 
           <div class="text-md font-bold leading-6 text-gray-900">Funding</div>
-          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ abstract.programFunding }}</dd>
+          <div v-if="abstract.programFunder != ''" class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Funder: {{ abstract.programFunder }}</div>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ fundingTypes }}</dd>
+
         </div>
       </div>
 
@@ -72,7 +74,16 @@
 </template>
 
 <script setup>
+import { ref, computed, reactive } from 'vue'
 import { CheckCircleIcon, PauseCircleIcon, BuildingLibraryIcon } from '@heroicons/vue/20/solid';
 import AbstractCardRow from './AbstractCardRow.vue';
 const props = defineProps(['abstract'])
+
+const fundingTypes = computed(() => {
+  let text = props.abstract.programFundingType.join(', ')
+  if (text.includes('Other') && props.abstract.programFundingTypeOther != '') {
+    text = text.replace('Other', props.abstract.programFundingTypeOther)
+  }
+  return text
+})
 </script>

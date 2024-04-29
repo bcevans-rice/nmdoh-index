@@ -8,7 +8,10 @@ const abstracts = [...abs].sort(sortAbstracts);
 
 let miniSearch = new MiniSearch({
   idField: 'responseID',
-  fields: ['programName', 'healthOrgName', 'programFunding', 'programOperation', 'countiesOffered', 'conditionFocus', 'nmdohTargets'], // fields to index for full-text search
+  fields: ['programName', 'healthOrgName', 'programFunding', 'programOperation', 'countiesOffered', 'conditionFocus', 'nmdohTargets', 'programFundingType'], // fields to index for full-text search
+  searchOptions: {
+    boost: {programName: 5},
+  },
   storeFields: ['responseID'] // fields to return with search results
 })
 miniSearch.addAll(abstracts)
@@ -143,6 +146,16 @@ export const useSearchStore = defineStore('search', {
         { value: 'Yes', label: 'Yes', checked: false },
         { value: 'No', label: 'No', checked: false },
       ],
+    }, {
+      id: 'programFundingType',
+      name: 'Program Funding Type',
+      options: [
+        { value: 'Private grant', label: 'Private grant', checked: false },
+        { value: 'Government funding (grant, contract, etc.)', label: 'Government funding (grant, contract, etc.)', checked: false },
+        { value: 'Operating budget', label: 'Operating budget', checked: false },
+        { value: 'Payor reimbursement', label: 'Payor reimbursement', checked: false },
+        { value: 'Other', label: 'Other', checked: false },
+      ]
     }],
     miniSearchFilteredList: [...abstracts],
     counts: {
@@ -152,7 +165,8 @@ export const useSearchStore = defineStore('search', {
       programIsEvaluated: {},
       nmdohTargets: {},
       nmdohTargetPopulations: {},
-      conditionFocus: {}
+      conditionFocus: {},
+      programFundingType: {},
     },
     sponsors: sponsorsArray,
     sponsorPrograms,
@@ -175,7 +189,6 @@ export const useSearchStore = defineStore('search', {
       let remaining = [...state.miniSearchFilteredList]
       let filters = Object.assign({}, ...(state.searchFilters.map(sect => ({ [sect.id]: sect.options.filter((opt) => opt.checked) }))));
 
-
       if (filters['nmdohTargets'].length > 0) {
         remaining = remaining.filter((abstract) => {
           return filters['nmdohTargets'].every((tgt) => {
@@ -193,6 +206,7 @@ export const useSearchStore = defineStore('search', {
       if (filters['nmdohTargetPopulations'].length > 0) {
         remaining = remaining.filter((abstract) => {
           return filters['nmdohTargetPopulations'].every((tgt) => {
+            console.log(abstract['nmdohTargetPopulations'], tgt.value);
             return abstract["nmdohTargetPopulations"].some(abTgt => abTgt === tgt.value);
           });
         });
@@ -222,6 +236,13 @@ export const useSearchStore = defineStore('search', {
         remaining = remaining.filter((abstract) => {
           return filters['programIsEvaluated'].every((tgt) => {
             return abstract["programIsEvaluated"] === tgt.value
+          });
+        });
+      }
+      if (filters['programFundingType'].length > 0) {
+        remaining = remaining.filter((abstract) => {
+          return filters['programFundingType'].every((tgt) => {
+            return (Object.hasOwn(abstract, 'programFundingType')) ? abstract["programFundingType"].some(abTgt => abTgt === tgt.value) : false
           });
         });
       }
@@ -276,6 +297,10 @@ export const useSearchStore = defineStore('search', {
           if (cf in this.counts["conditionFocus"]) this.counts["conditionFocus"][cf] += 1
           else this.counts["conditionFocus"][cf] = 1
         })
+        _abs["programFundingType"]?.forEach(ft => {
+          if (ft in this.counts["programFundingType"]) this.counts["programFundingType"][ft] += 1
+          else this.counts["programFundingType"][ft] = 1
+        })
 
         if (_abs["healthOrgType"] in this.counts["healthOrgType"]) this.counts["healthOrgType"][_abs["healthOrgType"]] += 1
         else this.counts["healthOrgType"][_abs["healthOrgType"]] = 1
@@ -285,6 +310,7 @@ export const useSearchStore = defineStore('search', {
 
         if (_abs["programIsEvaluated"] in this.counts["programIsEvaluated"]) this.counts["programIsEvaluated"][_abs["programIsEvaluated"]] += 1
         else this.counts["programIsEvaluated"][_abs["programIsEvaluated"]] = 1
+
       })
     },
     clearFilters () {
@@ -304,7 +330,8 @@ export const useSearchStore = defineStore('search', {
         programIsEvaluated: {},
         nmdohTargets: {},
         nmdohTargetPopulations: {},
-        conditionFocus: {}
+        conditionFocus: {},
+        programFundingType: {}
       }
     }
   },
