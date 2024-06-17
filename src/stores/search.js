@@ -126,6 +126,7 @@ export const useSearchStore = defineStore('search', {
         { value: 'Mental Health Diagnosis', label: 'Mental Health Diagnosis', checked: false },
         { value: 'Obesity/Overweight', label: 'Obesity/Overweight', checked: false },
         { value: 'Pregnancy', label: 'Pregnancy', checked: false },
+        { value: 'No specific health condition', label: 'No specific health condition', checked: false },
         { value: 'Other', label: 'Other', checked: false },
       ],
     }, {

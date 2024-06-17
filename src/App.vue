@@ -39,7 +39,11 @@ import { ref, watch, onMounted } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { useRoute, useRouter } from 'vue-router';
 import { useAppSetupStore } from '@/stores/appSetup'
+import { useAuthenticationStore } from '@/stores/authentication'
+import { storeToRefs } from 'pinia'
+
 const appSetupStore = useAppSetupStore()
+const { isAuthenticated } = storeToRefs(useAuthenticationStore())
 
 const appVersion = __APP_VERSION__
 const API_URL = appSetupStore.nmdohIndexServiceURL
@@ -48,7 +52,6 @@ const route = useRoute();
 const router = useRouter();
 
 const open = ref(false);
-const isAuthenticated = ref(false);
 const token = ref('')
 
 watch(route, () => {

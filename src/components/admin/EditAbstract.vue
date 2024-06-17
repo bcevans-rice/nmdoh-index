@@ -408,9 +408,9 @@
         <!-- nmdohTargetPopulationsOther -->
         <div v-if="editedAbstract.conditionFocus.indexOf('Other') > -1"
           class="relative grow max-w-[25%] rounded-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-nmdoh-purple">
-          <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Other Health Condition</label>
+          <label for="job-title" class="block text-xs font-semibold text-nmdoh-purple">Other Health Condition </label>
           <input type="text" v-model="editedAbstract.conditionFocusOther"
-            class="block border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Other condition" />
+            class="w-full block border-0 p-0 placeholder: focus:ring-0 sm:leading-6" placeholder="Other condition" />
         </div>
       </div>
 

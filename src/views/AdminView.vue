@@ -7,7 +7,7 @@
     <body class="h-full">
     ```
   -->
-  <div class="min-h-full">
+  <div  v-if="isAuthenticated" class="min-h-full">
     <Disclosure as="nav" class="bg-nmdoh-purple" v-slot="{ open }">
       <div class="mx-auto xl:px-36 lg:px-20 md:px-12">
         <div class="flex h-16 items-center justify-between">
@@ -61,9 +61,12 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { DocumentArrowDownIcon, Cog8ToothIcon } from '@heroicons/vue/24/solid'
 import { ref } from 'vue'
+import { useAuthenticationStore } from '@/stores/authentication'
 import { useAppSetupStore } from '@/stores/appSetup'
-const appSetupStore = useAppSetupStore()
+import { storeToRefs } from 'pinia'
 
+const appSetupStore = useAppSetupStore()
+const { isAuthenticated } = storeToRefs(useAuthenticationStore())
 
 const API_URL = appSetupStore.nmdohIndexServiceURL;
 const EXCEL_URL = 'https://index.driversofhealthtx.org/nmdoh-program-abstracts.xlsx';
